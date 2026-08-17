@@ -9,4 +9,4 @@ python -m venv venv
 venv\Scripts\activate.bat  (Command prompt)
 
 ### Requriment File 
-pip install -r requriments.txt
+pip install -r requirements.txt
