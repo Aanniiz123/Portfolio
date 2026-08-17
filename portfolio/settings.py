@@ -148,7 +148,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 # RAG / chatbot configuration
 GROQ_API = os.getenv("GROQ_API")
-GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.1-8b-instant")
+GROQ_MODEL = os.getenv("GROQ_MODEL", "groq/compound")
 RAG_INDEX_DIR = BASE_DIR / "core" / "rag_index"
 HERO_VIDEO_URL = os.getenv("HERO_VIDEO_URL", "")
 
