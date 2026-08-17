@@ -12,4 +12,8 @@ venv\Scripts\activate.bat  (Command prompt)
 pip install -r requirements.txt
 
 ## to run the project 
-python manage.py runserver
+1. python manage.py loaddata fixtures.json
+2. python manage.py makemigration
+3. python manage.py migrate
+
+4. python manage.py runserver
