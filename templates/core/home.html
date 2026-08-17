@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block title %}NOCT — Video Editor &amp; Visual Artist{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="showreel">
+        {% if hero_video_url %}
+            <iframe class="showreel__video"
+                    src="{{ hero_video_url }}"
+                    title="Showreel"
+                    frameborder="0"
+                    allow="autoplay; encrypted-media; picture-in-picture"
+                    allowfullscreen></iframe>
+            <div class="showreel__scrim"></div>
+        {% else %}
+            <div class="showreel__poster" aria-hidden="true"></div>
+        {% endif %}
+    </div>
+
+    <div class="hero__inner">
+        <p class="hero__eyebrow">NOCT · Nepal · Open for projects</p>
+
+        <h1 class="hero__title">
+            Visuals that move<br>
+            <span class="hero__accent">with the music.</span>
+        </h1>
+
+        <p class="hero__lede">
+            I'm <strong>NOCT</strong> — a Nepal-based video editor and visual artist
+            working primarily in After Effects. I create music-driven visuals,
+            visualizers, cinematic edits, and lyric work for musicians, rappers,
+            singers, and independent artists.
+        </p>
+
+        <div class="hero__actions">
+            <a href="{% url 'contact' %}" class="btn btn--primary">Start a project</a>
+            <a href="{% url 'work' %}" class="btn btn--ghost">See my work</a>
+        </div>
+    </div>
+</section>
+
+
+<section class="section">
+    <header class="section__head">
+        <h2 class="section__title">What I create</h2>
+        <p class="section__sub">Visual work built around music, mood, and storytelling.</p>
+    </header>
+
+    <div class="services services--grid">
+        {% for service in services %}
+            <article class="service">
+                <h3 class="service__title">{{ service.title }}</h3>
+                <p class="service__body">{{ service.body }}</p>
+            </article>
+        {% endfor %}
+    </div>
+</section>
+
+
+<section class="section">
+    <header class="section__head">
+        <h2 class="section__title">Creative style</h2>
+        <p class="section__sub">The influences and textures that shape my work.</p>
+    </header>
+
+    <div class="influences">
+        {% for item in influences %}
+            <span class="influence-chip">{{ item }}</span>
+        {% endfor %}
+    </div>
+</section>
+
+
+<section class="section">
+    <header class="section__head">
+        <h2 class="section__title">Social media</h2>
+        <p class="section__sub">Follow the work or reach out directly.</p>
+    </header>
+
+    <div class="services services--socials">
+        {% for s in socials %}
+            <a href="{{ s.url }}" target="_blank" rel="noopener"
+               class="service service--social"
+               aria-label="{{ s.name }} ({{ s.handle }})">
+                <h3 class="service__title">{{ s.name }}</h3>
+                <p class="service__body">{{ s.handle }}</p>
+            </a>
+        {% endfor %}
+    </div>
+</section>
+
+
+<section class="section">
+    <header class="section__head">
+        <h2 class="section__title">Tool &amp; experience</h2>
+        <p class="section__sub">Where the work happens, and where it's been.</p>
+    </header>
+
+    <div class="tools">
+        <div class="tools__col">
+            <h3 class="tools__heading">Primary tool</h3>
+            <ul class="tools__list">
+                {% for item in software %}
+                    <li class="tools__item">{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="tools__col">
+            <h3 class="tools__heading">Selected experience</h3>
+            <ul class="tools__list tools__list--single">
+                {% for item in experience %}
+                    <li class="tools__item">{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>
+
+
+<section class="section section--cta">
+    <header class="section__head">
+        <h2 class="section__title">Working on a track, drop, or visual?</h2>
+        <p class="section__sub">
+            I take on a small number of projects at a time so the work stays
+            personal. Tell me what you're making and I'll get back within a day.
+        </p>
+    </header>
+    <div class="hero__actions">
+        <a href="{% url 'contact' %}" class="btn btn--primary">Get in touch</a>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtualenv
+.venv/
+venv/
+env/
+
+# Django
+db.sqlite3
+db.sqlite3-journal
+media/*
+!media/.gitkeep
+!media/thumbnails/.gitkeep
+
+# RAG index — keep the directory but ignore the heavy files
+core/rag_index/*.faiss
+core/rag_index/*.json
+!core/rag_index/.gitkeep
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Env files
+.env
+.env.local
+
+.claude
+CHATBOT.md

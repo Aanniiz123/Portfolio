@@ -1,0 +1,7 @@
+django
+dotenv
+pypdf
+sentence-transformers
+faiss-cpu
+groq
+numpy

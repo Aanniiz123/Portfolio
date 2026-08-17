@@ -1,0 +1,30 @@
+<article class="video-card">
+    <a href="{{ project.video_url }}"
+       class="video-card__media"
+       style="--accent: {{ project.cover_color }};"
+       target="_blank" rel="noopener"
+       aria-label="Open {{ project.title }}">
+        {% if project.thumbnail %}
+            <img class="video-card__thumb"
+                 src="{{ project.thumbnail.url }}"
+                 alt="{{ project.title }}">
+        {% else %}
+            <div class="video-card__thumb video-card__thumb--placeholder" aria-hidden="true"></div>
+        {% endif %}
+        <span class="video-card__play" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </span>
+        <span class="video-card__chip">{{ project.get_category_display }}</span>
+    </a>
+
+    <div class="video-card__body">
+        <h3 class="video-card__title">{{ project.title }}</h3>
+        {% if project.client %}
+            <p class="video-card__client">{{ project.client }}</p>
+        {% endif %}
+        {% if project.description %}
+            <p class="video-card__desc">{{ project.description }}</p>
+        {% endif %}
+        <a class="link" href="{{ project.video_url }}" target="_blank" rel="noopener">Watch →</a>
+    </div>
+</article>

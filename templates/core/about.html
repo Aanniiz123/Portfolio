@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}About — NOCT{% endblock %}
+
+{% block content %}
+<section class="about-hero">
+    <p class="hero__eyebrow">About</p>
+    <h1 class="about-hero__title">
+        Music <span class="hero__accent">Mood</span>  Visual. <br>
+        Making  <span class="hero__accent">The Vibe</span> Visible
+    </h1>
+</section>
+
+
+<section class="section">
+    <div class="about-grid">
+        <div class="about-grid__copy">
+            <h2 class="section__title">Who I am</h2>
+            <p>
+                I'm <strong>NOCT</strong>, a Nepal-based video editor and visual
+                artist working primarily in <strong>Adobe After Effects</strong>.
+                My work sits at the intersection of music, rhythm, atmosphere, and
+                cinematic storytelling — visuals that feel connected to the sound
+                rather than simply placed on top of it.
+            </p>
+            <p>
+                Whether it's a music video edit, a visualizer, a cinematic
+                sequence, or an artist promo, I focus on mood, pacing,
+                typography, and visual detail to create something that feels
+                immersive and memorable.
+            </p>
+            <p>
+                I'm especially interested in working with <strong>musicians,
+                rappers, singers, producers, and independent artists</strong>
+                who want thoughtful visuals that support their music and
+                identity. If that's you,
+                <a class="link" href="{% url 'contact' %}">let's talk</a>.
+            </p>
+        </div>
+
+        <aside class="about-grid__card">
+            <h3 class="card__title">Quick facts</h3>
+            <dl class="facts">
+                {% for label, value in quick_facts %}
+                    <div class="facts__row">
+                        <dt>{{ label }}</dt>
+                        <dd>{{ value }}</dd>
+                    </div>
+                {% endfor %}
+            </dl>
+        </aside>
+    </div>
+</section>
+
+
+<section class="section">
+    <header class="section__head">
+        <h2 class="section__title">Selected creative experience</h2>
+        <p class="section__sub">A snapshot of the kind of work I make.</p>
+    </header>
+
+    <ol class="timeline">
+        {% for item in experience %}
+            <li class="timeline__item">
+                <span class="timeline__dot"></span>
+                <div class="timeline__body">
+                    <p class="timeline__period">{{ item.period }}</p>
+                    <h3 class="timeline__role">{{ item.role }}</h3>
+                    <p class="timeline__company">{{ item.where }}</p>
+                    <p class="timeline__summary">{{ item.body }}</p>
+                </div>
+            </li>
+        {% endfor %}
+    </ol>
+</section>
+
+
+<section class="section">
+    <header class="section__head">
+        <h2 class="section__title">My approach</h2>
+        <p class="section__sub">Four things I bring to every cut.</p>
+    </header>
+
+    <div class="approach">
+        {% for label, body in approach %}
+            <article class="approach__item">
+                <h3 class="approach__label">{{ label }}</h3>
+                <p class="approach__body">{{ body }}</p>
+            </article>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

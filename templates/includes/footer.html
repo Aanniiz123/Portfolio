@@ -1,0 +1,19 @@
+<footer class="footer">
+    <div class="footer__inner">
+        <p class="footer__brand">
+            <span class="footer__mark">N</span>
+            <span>NOCT · Video Editor &amp; Visual Artist</span>
+        </p>
+
+        <ul class="footer__links">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'work' %}">Work</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+
+        <p class="footer__copy">
+            &copy; {% now "Y" %} NOCT. All rights reserved.
+        </p>
+    </div>
+</footer>

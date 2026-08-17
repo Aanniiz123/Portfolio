@@ -1,0 +1,63 @@
+<button id="chat-fab"
+        class="chat-fab"
+        type="button"
+        aria-label="Open chat with NOCT's assistant"
+        aria-expanded="false"
+        aria-controls="chat-panel">
+    <svg class="chat-fab__icon chat-fab__icon--open" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+    </svg>
+    <svg class="chat-fab__icon chat-fab__icon--close" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M18 6 6 18M6 6l12 12"/>
+    </svg>
+</button>
+
+<section id="chat-panel"
+         class="chat-panel"
+         role="dialog"
+         aria-label="Chat with NOCT's assistant"
+         hidden>
+    <header class="chat-panel__head">
+        <div>
+            <p class="chat-panel__eyebrow">Portfolio assistant</p>
+            <h2 class="chat-panel__title">Ask about NOCT</h2>
+        </div>
+        <button id="chat-close"
+                class="chat-panel__close"
+                type="button"
+                aria-label="Close chat">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M18 6 6 18M6 6l12 12"/>
+            </svg>
+        </button>
+    </header>
+
+    <div id="chat-log"
+         class="chat-panel__log"
+         aria-live="polite"
+         aria-relevant="additions">
+        <div class="bubble bubble--bot">
+            <p>Hi! I can answer questions about NOCT's visual work, style, and availability. What would you like to know?</p>
+        </div>
+    </div>
+
+    <form id="chat-form" class="chat-panel__form" autocomplete="off">
+        <textarea id="chat-input"
+                  class="chat-panel__input"
+                  rows="1"
+                  placeholder="Ask a question…"
+                  aria-label="Message"></textarea>
+        <button type="submit"
+                class="chat-panel__send"
+                aria-label="Send message">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m22 2-7 20-4-9-9-4 20-7z"/>
+            </svg>
+        </button>
+    </form>
+
+    <p class="chat-panel__hint">
+        Answers come from NOCT's portfolio context. For project enquiries, use the
+        <a href="/contact/">contact form</a>.
+    </p>
+</section>

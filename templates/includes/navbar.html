@@ -1,0 +1,18 @@
+{% load static %}
+<nav class="navbar">
+    <div class="navbar__inner">
+        <a href="{% url 'home' %}" class="navbar__brand">
+            <span class="navbar__brand-mark">N</span>
+            <span class="navbar__brand-name">NOCT</span>
+        </a>
+
+        <ul class="navbar__links">
+            <li><a href="{% url 'home' %}"    class="{% if request.resolver_match.url_name == 'home' %}is-active{% endif %}">Home</a></li>
+            <li><a href="{% url 'work' %}"    class="{% if request.resolver_match.url_name == 'work' %}is-active{% endif %}">Work</a></li>
+            <li><a href="{% url 'about' %}"   class="{% if request.resolver_match.url_name == 'about' %}is-active{% endif %}">About</a></li>
+            <li><a href="{% url 'contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}is-active{% endif %}">Contact</a></li>
+        </ul>
+
+        <a href="{% url 'contact' %}" class="navbar__cta">Start a project</a>
+    </div>
+</nav>
