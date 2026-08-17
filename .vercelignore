@@ -1,0 +1,44 @@
+# Vercel: tell the build to ignore these when uploading the source.
+# Anything not needed at request time belongs here.
+
+# Virtual envs — DO NOT ship these (~700MB+)
+.venv/
+venv/
+env/
+
+# Vercel metadata
+.vercel/
+
+# Local tooling
+.claude/
+.git/
+.github/
+.idea/
+.vscode/
+
+# Build artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Local data — never put sqlite on serverless
+db.sqlite3
+db.sqlite3-journal
+
+# Heavy docs / assets that aren't code
+*.pdf
+CHATBOT.md
+README.md
+
+# Uploaded media — serve from object storage in prod
+media/
+
+# RAG index files — the chat endpoint will rebuild them at startup
+# (or use an external store). They're tiny, but exclude anyway.
+core/rag_index/*.faiss
+core/rag_index/*.json
+
+# OS / editor
+.DS_Store
+Thumbs.db

@@ -1,7 +1,11 @@
-django
-dotenv
-pypdf
-sentence-transformers
-faiss-cpu
-groq
-numpy
+# Runtime dependencies for the deployed Django app.
+# Keep this list SHORT — Vercel bundles every wheel into a 250 MB lambda.
+# Dev-only ML / heavy deps (sentence-transformers, faiss-cpu, numpy) are
+# intentionally excluded; the chatbot falls back gracefully when the
+# RAG index isn't built (see core.rag.answer).
+Django>=5.0,<6.0
+python-dotenv>=1.0
+pypdf>=4.0
+groq>=0.11
+gunicorn>=22.0
+whitenoise>=6.6
