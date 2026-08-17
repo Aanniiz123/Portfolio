@@ -1,7 +1,0 @@
-# Use this for LOCAL development / index building only.
-# These packages are too large for Vercel's 250 MB lambda limit and
-# are excluded from requirements.txt on purpose.
--r requirements.txt
-sentence-transformers>=3.0
-faiss-cpu>=1.8
-numpy>=1.26

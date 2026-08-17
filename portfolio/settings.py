@@ -25,17 +25,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-03ggpcnukcz(i$o6d+h3=yj6u(letn_nkb+_n$z@ak4k&cgy5l"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DJANGO_DEBUG", "False").lower() in ("1", "true", "yes")
+DEBUG = True
 
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     "testserver",
-    ".vercel.app",
-    ".now.sh",
 ]
-# Add your custom domain once you have one:
-# ALLOWED_HOSTS += ["yourdomain.com"]
 
 load_dotenv()
 
@@ -156,17 +152,7 @@ GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.1-8b-instant")
 RAG_INDEX_DIR = BASE_DIR / "core" / "rag_index"
 HERO_VIDEO_URL = os.getenv("HERO_VIDEO_URL", "")
 
-# Dev-only trusted origins for CSRF on the chat endpoint.
-# In production, set this via env to your real origin.
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:8000",
     "http://127.0.0.1:8000",
-    "https://*.vercel.app",
 ]
-
-# --- Static files on Vercel ------------------------------------------------
-# Vercel's @vercel/python serves files from /static automatically when
-# `collectstatic` is run. Whitenoise is the simplest in-process option.
-MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-STATIC_ROOT = BASE_DIR / "staticfiles"
