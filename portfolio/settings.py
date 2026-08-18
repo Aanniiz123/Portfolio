@@ -163,6 +163,8 @@ MAILERS = {
     },
 }
 
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
 DEFAULT_FROM_EMAIL = os.getenv("EMAIL_HOST_USER")
 ADMIN_EMAIL = os.getenv("ADMIN_EMAIL")
 
