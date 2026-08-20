@@ -68,6 +68,8 @@ def home(request):
 
     software = [
         "Adobe After Effects",
+        "Adobe Premiere Pro",
+        "CapCut",
     ]
 
     experience = [

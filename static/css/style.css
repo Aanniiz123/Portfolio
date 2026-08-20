@@ -24,7 +24,7 @@
     --shadow:       0 10px 30px rgba(168, 85, 247, 0.30);
     --radius:       14px;
     --radius-sm:    8px;
-    --font-sans:    'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    --font-sans:    'Poppins', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
     --font-mono:    'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
     --grain:        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.045 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
 }
@@ -600,7 +600,8 @@ p { margin: 0 0 1em; color: var(--text-dim); }
     grid-template-columns: 1fr;
 }
 .tools__item {
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
+    font-weight: 900;
     font-size: .85rem;
     color: var(--text-dim);
     padding: .35rem 0;
@@ -669,7 +670,8 @@ p { margin: 0 0 1em; color: var(--text-dim); }
 .facts__row dd {
     margin: 0;
     color: var(--text);
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
+    font-weight: 900;
     font-size: .82rem;
     text-align: right;
 }
@@ -743,6 +745,28 @@ p { margin: 0 0 1em; color: var(--text-dim); }
     line-height: 1.65;
 }
 
+/* ---------- approach rise-from-below animation ---------- */
+
+@keyframes riseFromBelow {
+    from {
+        opacity: 0;
+        transform: translateY(60px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+[data-rise-item] {
+    opacity: 0;
+    will-change: transform, opacity;
+}
+
+[data-rise-item].is-visible {
+    animation: riseFromBelow .8s cubic-bezier(.22, 1, .36, 1) forwards;
+}
+
 /* ---------- about slide-in animation ---------- */
 
 @keyframes slideInFromLeft {
@@ -782,6 +806,11 @@ p { margin: 0 0 1em; color: var(--text-dim); }
 
 @media (prefers-reduced-motion: reduce) {
     [data-slide] {
+        opacity: 1;
+        transform: none;
+        animation: none;
+    }
+    [data-rise-item] {
         opacity: 1;
         transform: none;
         animation: none;
