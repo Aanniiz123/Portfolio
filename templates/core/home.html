@@ -18,7 +18,7 @@
         {% endif %}
     </div>
 
-    <div class="hero__inner">
+    <div class="hero__inner" data-stagger data-stagger-step="140">
         <p class="hero__eyebrow">NOCT · Nepal · Open for projects</p>
 
         <h1 class="hero__title">
@@ -47,9 +47,9 @@
         <p class="section__sub">Visual work built around music, mood, and storytelling.</p>
     </header>
 
-    <div class="services services--grid">
+    <div class="services services--grid" data-stagger>
         {% for service in services %}
-            <article class="service">
+            <article class="service" data-anim="rise">
                 <h3 class="service__title">{{ service.title }}</h3>
                 <p class="service__body">{{ service.body }}</p>
             </article>
@@ -64,9 +64,9 @@
         <p class="section__sub">The influences and textures that shape my work.</p>
     </header>
 
-    <div class="influences">
+    <div class="influences" data-stagger data-stagger-step="50">
         {% for item in influences %}
-            <span class="influence-chip">{{ item }}</span>
+            <span class="influence-chip" data-anim="fade">{{ item }}</span>
         {% endfor %}
     </div>
 </section>
@@ -78,10 +78,11 @@
         <p class="section__sub">Follow the work or reach out directly.</p>
     </header>
 
-    <div class="services services--socials">
+    <div class="services services--socials" data-stagger>
         {% for s in socials %}
             <a href="{{ s.url }}" target="_blank" rel="noopener"
                class="service service--social"
+               data-anim="rise"
                aria-label="{{ s.name }} ({{ s.handle }})">
                 <h3 class="service__title">{{ s.name }}</h3>
                 <p class="service__body">{{ s.handle }}</p>
@@ -98,19 +99,19 @@
     </header>
 
     <div class="tools">
-        <div class="tools__col">
+        <div class="tools__col" data-anim="rise">
             <h3 class="tools__heading">Primary tool</h3>
-            <ul class="tools__list tools__list--single">
+            <ul class="tools__list tools__list--single" data-stagger data-stagger-step="70">
                 {% for item in software %}
-                    <li class="tools__item">{{ item }}</li>
+                    <li class="tools__item" data-anim="fade">{{ item }}</li>
                 {% endfor %}
             </ul>
         </div>
-        <div class="tools__col">
+        <div class="tools__col" data-anim="rise">
             <h3 class="tools__heading">Selected experience</h3>
-            <ul class="tools__list tools__list--single">
+            <ul class="tools__list tools__list--single" data-stagger data-stagger-step="70">
                 {% for item in experience %}
-                    <li class="tools__item">{{ item }}</li>
+                    <li class="tools__item" data-anim="fade">{{ item }}</li>
                 {% endfor %}
             </ul>
         </div>
@@ -126,7 +127,7 @@
             personal. Tell me what you're making and I'll get back within a day.
         </p>
     </header>
-    <div class="hero__actions">
+    <div class="hero__actions" data-anim="rise">
         <a href="{% url 'contact' %}" class="btn btn--primary">Get in touch</a>
     </div>
 </section>

@@ -4,20 +4,22 @@
 
 {% block content %}
 <section class="work-hero">
-    <p class="hero__eyebrow">Work</p>
-    <h1 class="work-hero__title">
-        Selected <span class="hero__accent">visuals</span> &amp; projects.
-    </h1>
-    <p class="work-hero__lede">
-        A sample of recent music videos, visualizers, cinematic edits, and
-        artist promos.
-    </p>
+    <div data-stagger data-stagger-step="140">
+        <p class="hero__eyebrow">Work</p>
+        <h1 class="work-hero__title">
+            Selected <span class="hero__accent">visuals</span> &amp; projects.
+        </h1>
+        <p class="work-hero__lede">
+            A sample of recent music videos, visualizers, cinematic edits, and
+            artist promos.
+        </p>
+    </div>
 </section>
 
 
 <section class="section">
     {% if projects %}
-        <div class="video-grid">
+        <div class="video-grid" data-stagger>
             {% for project in projects %}
                 {% include "includes/video_card.html" with project=project %}
             {% endfor %}
@@ -36,7 +38,7 @@
             making and I'll get back within a day.
         </p>
     </header>
-    <div class="hero__actions">
+    <div class="hero__actions" data-anim="rise">
         <a href="{% url 'contact' %}" class="btn btn--primary">Get in touch</a>
     </div>
 </section>

@@ -4,7 +4,7 @@
 
 {% block content %}
 <section class="contact">
-    <header class="contact__head">
+    <header class="contact__head" data-stagger data-stagger-step="140">
         <p class="hero__eyebrow">Get in touch</p>
         <h1 class="contact__title">
             Let's build something that <span class="hero__accent">feels right</span>.
@@ -16,7 +16,7 @@
         </p>
     </header>
 
-    <form method="post" class="form" novalidate>
+    <form method="post" class="form" data-anim="scale" novalidate>
         {% csrf_token %}
 
         {% if form.non_field_errors %}

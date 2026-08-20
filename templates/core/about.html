@@ -4,17 +4,19 @@
 
 {% block content %}
 <section class="about-hero">
-    <p class="hero__eyebrow">About</p>
-    <h1 class="about-hero__title">
-        Music <span class="hero__accent">Mood</span>  Visual. <br>
-        Making  <span class="hero__accent">The Vibe</span> Visible
-    </h1>
+    <div data-stagger data-stagger-step="140">
+        <p class="hero__eyebrow">About</p>
+        <h1 class="about-hero__title">
+            Music <span class="hero__accent">Mood</span>  Visual. <br>
+            Making  <span class="hero__accent">The Vibe</span> Visible
+        </h1>
+    </div>
 </section>
 
 
-<section class="section" data-slide="left">
+<section class="section">
     <div class="about-grid">
-        <div class="about-grid__copy">
+        <div class="about-grid__copy" data-anim="left">
             <h2 class="section__title">Who I am</h2>
             <p>
                 I'm <strong>NOCT</strong>, a Nepal-based video editor and visual
@@ -38,11 +40,11 @@
             </p>
         </div>
 
-        <aside class="about-grid__card" data-slide="right">
+        <aside class="about-grid__card" data-anim="right">
             <h3 class="card__title">Quick facts</h3>
-            <dl class="facts">
+            <dl class="facts" data-stagger data-stagger-step="60">
                 {% for label, value in quick_facts %}
-                    <div class="facts__row">
+                    <div class="facts__row" data-anim="fade">
                         <dt>{{ label }}</dt>
                         <dd>{{ value }}</dd>
                     </div>
@@ -53,15 +55,15 @@
 </section>
 
 
-<section class="section" data-slide="right">
+<section class="section">
     <header class="section__head">
         <h2 class="section__title">Selected creative experience</h2>
         <p class="section__sub">A snapshot of the kind of work I make.</p>
     </header>
 
-    <ol class="timeline">
+    <ol class="timeline" data-stagger data-stagger-step="110">
         {% for item in experience %}
-            <li class="timeline__item">
+            <li class="timeline__item" data-anim="rise">
                 <span class="timeline__dot"></span>
                 <div class="timeline__body">
                     <p class="timeline__period">{{ item.period }}</p>
@@ -75,15 +77,15 @@
 </section>
 
 
-<section class="section" data-slide="left">
+<section class="section">
     <header class="section__head">
         <h2 class="section__title">My approach</h2>
         <p class="section__sub">Four things I bring to every cut.</p>
     </header>
 
-    <div class="approach" data-rise-group>
+    <div class="approach" data-stagger data-stagger-step="110">
         {% for label, body in approach %}
-            <article class="approach__item" data-rise-item>
+            <article class="approach__item" data-anim="rise">
                 <h3 class="approach__label">{{ label }}</h3>
                 <p class="approach__body">{{ body }}</p>
             </article>

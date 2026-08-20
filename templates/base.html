@@ -16,9 +16,12 @@
 </head>
 <body>
 
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="scroll-progress" aria-hidden="true"></div>
+
     {% include 'includes/navbar.html' %}
 
-    <main class="main">
+    <main class="main" id="main">
         {% if messages %}
             <div class="messages">
                 {% for message in messages %}
@@ -34,6 +37,6 @@
 
     {% include 'includes/chat_widget.html' %}
     <script src="{% static 'js/chat.js' %}" defer></script>
-    <script src="{% static 'js/about.js' %}" defer></script>
+    <script src="{% static 'js/ui.js' %}" defer></script>
 </body>
 </html>

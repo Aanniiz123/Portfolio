@@ -27,6 +27,11 @@
     --font-sans:    'Poppins', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
     --font-mono:    'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
     --grain:        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.045 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    --ease-out:      cubic-bezier(.22, 1, .36, 1);
+    --ease-out-soft: cubic-bezier(.16, 1, .3, 1);
+    --anim-fast:     .25s;
+    --anim-base:     .55s;
+    --anim-slow:     .85s;
 }
 
 * { box-sizing: border-box; }
@@ -184,7 +189,7 @@ p { margin: 0 0 1em; color: var(--text-dim); }
 }
 .navbar__links a:hover { color: var(--text); }
 .navbar__links a.is-active { color: var(--accent-soft); }
-.navbar__links a.is-active::after {
+.navbar__links a::after {
     content: "";
     position: absolute;
     left: 0; right: 0;
@@ -192,6 +197,13 @@ p { margin: 0 0 1em; color: var(--text-dim); }
     height: 2px;
     background: linear-gradient(90deg, var(--accent), var(--red));
     border-radius: 1px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .25s var(--ease-out);
+}
+.navbar__links a:hover::after,
+.navbar__links a.is-active::after {
+    transform: scaleX(1);
 }
 
 .navbar__cta {
@@ -317,9 +329,10 @@ p { margin: 0 0 1em; color: var(--text-dim); }
     font-size: .95rem;
     cursor: pointer;
     border: 1px solid transparent;
-    transition: transform .15s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
+    transition: transform .15s var(--ease-out), background .2s ease, border-color .2s ease, box-shadow .2s ease;
     font-family: inherit;
 }
+.btn:active { transform: translateY(1px) scale(.99); }
 .btn--primary {
     background: var(--accent);
     color: #0a0a0a;
@@ -544,7 +557,7 @@ p { margin: 0 0 1em; color: var(--text-dim); }
     padding: .45rem .85rem;
     border-radius: 999px;
     letter-spacing: .02em;
-    transition: color .2s ease, border-color .2s ease, background .2s ease;
+    transition: color .2s ease, border-color .2s ease, background .2s ease, transform .15s var(--ease-out);
 }
 .influence-chip::before {
     content: "";
@@ -557,6 +570,7 @@ p { margin: 0 0 1em; color: var(--text-dim); }
     color: var(--text);
     border-color: rgba(168, 85, 247, .6);
     background: rgba(168, 85, 247, .14);
+    transform: translateY(-2px);
 }
 
 /* ---------- tools (software & experience) ---------- */
@@ -745,76 +759,96 @@ p { margin: 0 0 1em; color: var(--text-dim); }
     line-height: 1.65;
 }
 
-/* ---------- approach rise-from-below animation ---------- */
+/* ---------- sitewide reveal animation system ---------- */
 
-@keyframes riseFromBelow {
-    from {
-        opacity: 0;
-        transform: translateY(60px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+/* Keyframes used by [data-anim="..."] variants. All variants use @keyframes
+   (not transitions) so the JS observer can remove/re-add the is-visible class
+   to restart the animation on every viewport crossing. */
 
-[data-rise-item] {
-    opacity: 0;
-    will-change: transform, opacity;
-}
+@keyframes fadeIn         { from { opacity: 0; } to { opacity: 1; } }
+@keyframes riseFromBelow  { from { opacity: 0; transform: translateY(40px); }
+                            to   { opacity: 1; transform: none; } }
+@keyframes scaleIn        { from { opacity: 0; transform: scale(.96); }
+                            to   { opacity: 1; transform: none; } }
+@keyframes slideInLeft    { from { opacity: 0; transform: translateX(-40px); }
+                            to   { opacity: 1; transform: none; } }
+@keyframes slideInRight   { from { opacity: 0; transform: translateX(40px); }
+                            to   { opacity: 1; transform: none; } }
 
-[data-rise-item].is-visible {
-    animation: riseFromBelow .8s cubic-bezier(.22, 1, .36, 1) forwards;
-}
+[data-anim]            { opacity: 0; will-change: transform, opacity;
+                         animation-delay: var(--anim-delay, 0ms);
+                         animation-play-state: paused; }
+[data-anim="fade"]     { animation-name: fadeIn; }
+[data-anim="rise"]     { animation-name: riseFromBelow; }
+[data-anim="scale"]    { animation-name: scaleIn; }
+[data-anim="left"]     { animation-name: slideInLeft; }
+[data-anim="right"]    { animation-name: slideInRight; }
 
-/* ---------- about slide-in animation ---------- */
+[data-anim].is-visible { animation-fill-mode: forwards;
+                         animation-play-state: running;
+                         animation-duration: var(--anim-base);
+                         animation-timing-function: var(--ease-out);
+                         will-change: auto; }
+[data-anim="scale"].is-visible    { animation-duration: var(--anim-slow); }
+.influence-chip[data-anim].is-visible { animation-duration: var(--anim-fast); }
 
-@keyframes slideInFromLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-80px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
+/* Navbar: persistent, so it gets a one-shot entrance, not the JS observer. */
 
-@keyframes slideInFromRight {
-    from {
-        opacity: 0;
-        transform: translateX(80px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
+@keyframes navbarIn { from { opacity: 0; transform: translateY(-6px); }
+                      to   { opacity: 1; transform: none; } }
+.navbar { animation: navbarIn .4s var(--ease-out) both; }
 
-[data-slide] {
-    opacity: 0;
-    will-change: transform, opacity;
-}
+/* Skip-to-content: sits off-screen until focused via keyboard tab. */
 
-[data-slide="left"].is-visible {
-    animation: slideInFromLeft .9s cubic-bezier(.22, 1, .36, 1) forwards;
-}
+.skip-link { position: absolute; top: -40px; left: 1rem;
+             background: var(--accent); color: #0a0a0a;
+             padding: .5rem .85rem; border-radius: 6px;
+             font-weight: 600; z-index: 200;
+             transition: top .2s var(--ease-out); }
+.skip-link:focus { top: 1rem; }
 
-[data-slide="right"].is-visible {
-    animation: slideInFromRight .9s cubic-bezier(.22, 1, .36, 1) forwards;
-}
+/* Visible keyboard focus on every interactive element. */
+
+:focus-visible { outline: 2px solid var(--accent-soft);
+                 outline-offset: 3px; border-radius: 4px; }
+.btn:focus-visible,
+.navbar__cta:focus-visible { outline-color: var(--accent);
+                            box-shadow: 0 0 0 3px rgba(168, 85, 247, .35); }
+
+/* Scroll-progress bar pinned to the top; width driven by --scroll on :root. */
+
+.scroll-progress { position: fixed; top: 0; left: 0;
+                   height: 2px; width: var(--scroll, 0%);
+                   background: var(--accent-soft);
+                   box-shadow: 0 0 8px rgba(168, 85, 247, .55);
+                   z-index: 60; pointer-events: none;
+                   transition: width .08s linear; }
+
+/* Deep-link anchor offset so jump-to-section lands below the sticky navbar. */
+
+.section { scroll-margin-top: 80px; }
+
+/* Brand-mark hover pulse — single-shot, only when the user actually hovers. */
+
+@keyframes brandPulse { 0% { transform: scale(1); }
+                        50% { transform: scale(1.08); }
+                        100% { transform: scale(1); } }
+.navbar__brand:hover .navbar__brand-mark,
+.footer__brand:hover  .footer__mark { animation: brandPulse .5s var(--ease-out); }
 
 @media (prefers-reduced-motion: reduce) {
-    [data-slide] {
-        opacity: 1;
-        transform: none;
-        animation: none;
+    [data-anim], [data-anim].is-visible,
+    .navbar, .navbar__brand-mark, .footer__mark,
+    .scroll-progress {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+        will-change: auto !important;
     }
-    [data-rise-item] {
-        opacity: 1;
-        transform: none;
-        animation: none;
-    }
+    .scroll-progress { display: none; }
+    .navbar__brand:hover .navbar__brand-mark,
+    .footer__brand:hover  .footer__mark { animation: none !important; }
 }
 
 /* ---------- contact ---------- */
@@ -891,7 +925,9 @@ p { margin: 0 0 1em; color: var(--text-dim); }
     border-color: var(--accent);
     background: var(--bg);
     box-shadow: 0 0 0 3px rgba(168, 85, 247, .2);
+    transform: translateY(-1px);
 }
+.form input, .form textarea { transition: border-color .15s ease, box-shadow .15s ease, background .15s ease, transform .15s var(--ease-out); }
 .form textarea { min-height: 150px; resize: vertical; line-height: 1.6; }
 
 .form__help {
