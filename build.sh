@@ -16,7 +16,7 @@ PROJECT_COUNT=$(python manage.py shell -c "from core.models import VideoProject;
 
 echo "==> VideoProject count: '$PROJECT_COUNT'"
 
-if [ "$PROJECT_COUNT" = "0" ] || [ -z "$PROJECT_COUNT" ]; then
+if true; then  # TEMP: force seed — revert after deploy works
     echo "==> Database is empty, loading fixtures.json"
     python manage.py loaddata fixtures.json
 else
