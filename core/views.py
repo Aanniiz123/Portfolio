@@ -183,7 +183,6 @@ def contact_view(request):
                     message=full_message,
                     from_email=settings.DEFAULT_FROM_EMAIL,
                     recipient_list=[settings.ADMIN_EMAIL],
-                    using="default",
                 )
             except Exception:
                 messages.warning(

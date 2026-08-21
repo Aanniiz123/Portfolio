@@ -179,7 +179,7 @@ STORAGES = {
 
 # RAG / chatbot configuration
 GROQ_API = os.getenv("GROQ_API")
-GROQ_MODEL = os.getenv("GROQ_MODEL", "groq/compound")
+GROQ_MODEL = os.getenv("GROQ_MODEL", "llama3-8b-8192")
 RAG_INDEX_DIR = BASE_DIR / "core" / "rag_index"
 HERO_VIDEO_URL = os.getenv("HERO_VIDEO_URL", "")
 
