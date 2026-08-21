@@ -14,6 +14,9 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 
+# Load environment variables before reading settings
+load_dotenv()
+
 try:
     import dj_database_url
 except ImportError:  # dj_database_url is only required in production
@@ -39,11 +42,10 @@ _default_hosts = [
     "localhost",
     "127.0.0.1",
     "testserver",
+    ".onrender.com",
 ]
 _extra_hosts = [h.strip() for h in os.getenv("DJANGO_ALLOWED_HOSTS", "").split(",") if h.strip()]
 ALLOWED_HOSTS = _default_hosts + _extra_hosts
-
-load_dotenv()
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -152,13 +154,14 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+EMAIL_TIMEOUT = 10
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-DEFAULT_FROM_EMAIL = os.getenv("EMAIL_HOST_USER")
-ADMIN_EMAIL = os.getenv("ADMIN_EMAIL")
+DEFAULT_FROM_EMAIL = os.getenv("EMAIL_HOST_USER") or "noreply@portfolio.com"
+ADMIN_EMAIL = os.getenv("ADMIN_EMAIL") or os.getenv("EMAIL_HOST_USER")
 
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
@@ -177,9 +180,9 @@ STORAGES = {
     },
 }
 
-# RAG / chatbot configuration
-GROQ_API = os.getenv("GROQ_API")
-GROQ_MODEL = os.getenv("GROQ_MODEL", "llama3-8b-8192")
+# RAG / chatbot configuration (supports both GROQ_API and GROQ_API_KEY)
+GROQ_API = os.getenv("GROQ_API") or os.getenv("GROQ_API_KEY")
+GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.1-8b-instant")
 RAG_INDEX_DIR = BASE_DIR / "core" / "rag_index"
 HERO_VIDEO_URL = os.getenv("HERO_VIDEO_URL", "")
 

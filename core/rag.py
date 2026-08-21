@@ -321,24 +321,29 @@ def answer(question: str, history: list[dict[str, str]] | None = None) -> dict[s
             "error": "upstream_unavailable",
         }
 
-    if not settings.GROQ_API:
-        logger.error("GROQ_API is not configured")
+    api_key = getattr(settings, "GROQ_API", None) or os.getenv("GROQ_API_KEY") or os.getenv("GROQ_API")
+    if not api_key:
+        logger.error("GROQ_API / GROQ_API_KEY is not configured")
         return {
             "answer": "The assistant isn't fully configured yet. Please use the contact form.",
             "sources": [],
             "error": "upstream_unavailable",
         }
 
-    client = Groq(api_key=settings.GROQ_API)
+    client = Groq(api_key=api_key)
+    model = getattr(settings, "GROQ_MODEL", None) or os.getenv("GROQ_MODEL", "llama-3.1-8b-instant")
+    if model in ("llama3-8b-8192", "groq/compound"):
+        model = "llama-3.1-8b-instant"
+
     try:
         completion = client.chat.completions.create(
-            model=settings.GROQ_MODEL,
+            model=model,
             messages=messages,
             temperature=0.2,
             max_tokens=300,
         )
-    except Exception:
-        logger.exception("Groq call failed")
+    except Exception as exc:
+        logger.exception("Groq call failed: %s", exc)
         return {
             "answer": "I'm having trouble reaching the assistant right now. Please try again in a moment.",
             "sources": [],

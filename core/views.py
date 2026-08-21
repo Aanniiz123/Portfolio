@@ -177,20 +177,30 @@ def contact_view(request):
                 f"{instance.message}"
             )
 
-            try:
-                send_mail(
-                    subject=f"NOCT Portfolio Contact: {instance.subject}",
-                    message=full_message,
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[settings.ADMIN_EMAIL],
-                )
-            except Exception:
+            email_sent = False
+            recipient = getattr(settings, "ADMIN_EMAIL", None) or getattr(settings, "EMAIL_HOST_USER", None)
+            from_email = getattr(settings, "DEFAULT_FROM_EMAIL", None) or recipient
+
+            if recipient and getattr(settings, "EMAIL_HOST_USER", None) and getattr(settings, "EMAIL_HOST_PASSWORD", None):
+                try:
+                    send_mail(
+                        subject=f"NOCT Portfolio Contact: {instance.subject}",
+                        message=full_message,
+                        from_email=from_email,
+                        recipient_list=[recipient],
+                        fail_silently=False,
+                    )
+                    email_sent = True
+                except Exception as exc:
+                    logger.warning("Failed to send contact notification email: %s", exc)
+
+            if email_sent:
+                messages.success(request, "Your message has been sent — I'll reply soon.")
+            else:
                 messages.warning(
                     request,
                     "Your message was saved, but the email notification failed to send.",
                 )
-            else:
-                messages.success(request, "Your message has been sent — I'll reply soon.")
 
             return redirect("contact")
     else:
