@@ -12,7 +12,13 @@ python manage.py migrate --noinput
 
 # Auto-seed: if there are no projects, load the bundled fixtures.
 # This is idempotent — safe to run on every deploy.
-PROJECT_COUNT=$(python manage.py shell -c "from core.models import VideoProject; print(VideoProject.objects.count())" 2>/dev/null | tr -d '[:space:]' || echo "0")
+PROJECT_COUNT=$(python -c "
+import django, os
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'portfolio.settings')
+django.setup()
+from core.models import VideoProject
+print(VideoProject.objects.count())
+" 2>/dev/null | tail -1 | tr -d '[:space:]' || echo "0")
 
 echo "==> VideoProject count: '$PROJECT_COUNT'"
 
