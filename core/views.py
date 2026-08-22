@@ -2,10 +2,10 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 
 from django.conf import settings
 from django.contrib import messages
-from django.core.mail import send_mail
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_exempt
@@ -127,7 +127,7 @@ def about(request):
         ("Experience",        "1.5+ months active editing & visual production"),
         ("Focus",             "Music visuals · cinematic · artist collaboration"),
         ("Looking for",       "Musicians · rappers · singers · producers · indie artists"),
-        ("Email",             "trippiextgamer@gmail.com"),
+        ("Email",             "daritech081@gmail.com"),
     ]
 
     experience = [
@@ -172,27 +172,48 @@ def contact_view(request):
         if form.is_valid():
             instance = form.save()
 
-            full_message = (
-                f"From: {instance.name} <{instance.email}>\n\n"
-                f"{instance.message}"
+            full_text = (
+                f"New message from your portfolio contact form:\n\n"
+                f"Name: {instance.name}\n"
+                f"Email: {instance.email}\n"
+                f"Subject: {instance.subject}\n\n"
+                f"Message:\n{instance.message}"
+            )
+            html_content = (
+                f"<h3>New message from your portfolio contact form</h3>"
+                f"<p><strong>Name:</strong> {instance.name}</p>"
+                f"<p><strong>Email:</strong> <a href='mailto:{instance.email}'>{instance.email}</a></p>"
+                f"<p><strong>Subject:</strong> {instance.subject}</p>"
+                f"<hr/>"
+                f"<p style='white-space: pre-wrap;'>{instance.message}</p>"
             )
 
             email_sent = False
-            recipient = getattr(settings, "ADMIN_EMAIL", None) or getattr(settings, "EMAIL_HOST_USER", None)
-            from_email = getattr(settings, "DEFAULT_FROM_EMAIL", None) or recipient
+            resend_api_key = (
+                getattr(settings, "RESEND_API_KEY", None)
+                or os.getenv("RESEND_API_KEY")
+                or os.getenv("RESEND_API")
+            )
+            recipient = getattr(settings, "ADMIN_EMAIL", None) or "daritech081@gmail.com"
+            from_email = getattr(settings, "DEFAULT_FROM_EMAIL", None) or "NOCT Portfolio <onboarding@resend.dev>"
 
-            if recipient and getattr(settings, "EMAIL_HOST_USER", None) and getattr(settings, "EMAIL_HOST_PASSWORD", None):
+            if resend_api_key and recipient:
                 try:
-                    send_mail(
-                        subject=f"NOCT Portfolio Contact: {instance.subject}",
-                        message=full_message,
-                        from_email=from_email,
-                        recipient_list=[recipient],
-                        fail_silently=False,
-                    )
+                    import resend
+
+                    resend.api_key = resend_api_key
+                    params = {
+                        "from": from_email,
+                        "to": [recipient],
+                        "reply_to": instance.email,
+                        "subject": f"NOCT Portfolio Contact: {instance.subject}",
+                        "text": full_text,
+                        "html": html_content,
+                    }
+                    resend.Emails.send(params)
                     email_sent = True
                 except Exception as exc:
-                    logger.warning("Failed to send contact notification email: %s", exc)
+                    logger.warning("Failed to send contact notification email via Resend: %s", exc)
 
             if email_sent:
                 messages.success(request, "Your message has been sent — I'll reply soon.")

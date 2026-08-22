@@ -160,19 +160,12 @@ USE_TZ = True
 STATIC_URL = "static/"
 
 
-# Email
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_TIMEOUT = 10
-EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+# Email (Resend API)
+RESEND_API_KEY = os.getenv("RESEND_API_KEY") or os.getenv("RESEND_API")
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL") or "NOCT Portfolio <onboarding@resend.dev>"
+ADMIN_EMAIL = os.getenv("ADMIN_EMAIL") or "daritech081@gmail.com"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-DEFAULT_FROM_EMAIL = os.getenv("EMAIL_HOST_USER") or "noreply@portfolio.com"
-ADMIN_EMAIL = os.getenv("ADMIN_EMAIL") or os.getenv("EMAIL_HOST_USER")
 
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
