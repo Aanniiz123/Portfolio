@@ -43,9 +43,20 @@ _default_hosts = [
     "127.0.0.1",
     "testserver",
     ".onrender.com",
+    "kafleabhishek.com.np",
+    "www.kafleabhishek.com.np",
 ]
-_extra_hosts = [h.strip() for h in os.getenv("DJANGO_ALLOWED_HOSTS", "").split(",") if h.strip()]
+
+_extra_hosts = [
+    h.strip()
+    for h in os.getenv("DJANGO_ALLOWED_HOSTS", "").split(",")
+    if h.strip()
+]
+
+
+
 ALLOWED_HOSTS = _default_hosts + _extra_hosts
+
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -189,9 +200,12 @@ HERO_VIDEO_URL = os.getenv("HERO_VIDEO_URL", "")
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:8000",
     "http://127.0.0.1:8000",
-    "https://*.onrender.com",
-]
 
+    "https://portfolio-fxdx.onrender.com",
+
+    "https://kafleabhishek.com.np",
+    "https://www.kafleabhishek.com.np",
+]
 # Cloudinary config — only effective if env vars are present.
 if os.getenv("CLOUDINARY_CLOUD_NAME"):
     import cloudinary
